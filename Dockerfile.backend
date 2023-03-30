@@ -1,0 +1,21 @@
+FROM python:3.11
+
+WORKDIR /usr/src
+
+USER root
+
+# install requirements
+COPY pipelines/backend/requirements.txt ./pipelines/backend/requirements.txt
+RUN pip install --upgrade pip && pip install -r ./pipelines/backend/requirements.txt
+RUN pip install pyopenssl --upgrade
+
+ENV PYTHONPATH=/usr/src
+ENV CONFIG_FILE=/usr/src/common/config_files/config.yml
+ENV MODEL_PATH=/usr/src/models/model_stroke_pred.pkl
+
+# common
+COPY common/ common/
+
+COPY pipelines/backend/ pipelines/backend/
+
+CMD ["bash", "pipelines/backend/start_service.sh"]

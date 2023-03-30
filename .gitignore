@@ -1,0 +1,7 @@
+_ignore/
+
+*.csv
+
+*.pkl
+
+docker-compose.yml

@@ -1,0 +1,43 @@
+# model config data for prepare_data and train pipelines
+model:
+  features:
+    categoric: 
+      - SMOKING_STATUS
+      - GENDER
+    numeric:
+      - AGE
+      - AVG_GLUCOSE_LEVEL 
+      - BMI
+    binary:
+      - HYPERTENSION 
+      - HEART_DISEASE
+    target: STROKE
+  separator_categoric: '___'
+
+# train config data for train pipeline
+train:
+  model_type: 'SVM'
+  model_type_list: 
+    - SVM
+    - XGBOOST
+  test_size_split: 0.33
+  parameters_GridSearch:
+    SVM: 
+      C: [0.1, 1, 10, 100, 1000]
+      gamma: [1, 0.1, 0.01, 0.001, 0.0001]
+      kernel: ['rbf']
+    XGBOOST: 
+      learning_rate: [0.01, 0.05, 0.1]
+      n_estimators: [200, 300, 400]
+      subsample: [0.5, 0.9]
+
+# backend config data for backend pipeline
+backend:
+  request_features:
+    GENDER: Literal['MALE', 'FEMALE']
+    SMOKING_STATUS: Literal['NEVER_SMOKED', 'UNKNOWN', 'FORMERLY_SMOKED', 'SMOKES']
+    AGE: float
+    AVG_GLUCOSE_LEVEL: float 
+    BMI: float
+    HYPERTENSION: Literal[0, 1] 
+    HEART_DISEASE: Literal[0, 1] 
